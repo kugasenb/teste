@@ -1,0 +1,72 @@
+Campos = cod_prod, loj_prod, desc_prod, dt_inclu_prod, preco_prod
+
+1 - Com base na tabela de “produtos” acima favor inserir um registro na referida tabela passando os seguintes valores :
+cod_prod =170, loj_prod=2, desc_prod=LEITE CONDESADO MOCOCA, dt_inclu_prod=30/12/2010  e preço_prod = R$45,40.
+
+Resposta)
+	insert into produtos (cod_prod, loj_prod, desc_prod, dt_inclu_prod, preco_prod) values (170, 2, 'LEITE CONDESADO MOCOCA', 30/12/2010, 45,40)
+
+
+2 - O Índice da tabela  de “produtos é o cód_prod e a loj_prod,
+ com base no referido índice faça a alteração do preço do produto para R$95,40, lembrando que o cod_prod =170 e a loj_prod=2: 
+
+Resposta)
+	update produtos set preco = 95.40 where cod_prod = 170 and loj_prod = 2;
+ 
+3 - Com base na tabela de “produtos” monte um select trazendo todos os registros da loja 1 e 2:
+
+Resposta)
+	Select Campo,cod_prod,loj_prod,desc_prod,dt_inclu_prod,preco_prod from produtos where loj_prod = 1 and loj_prod = 2;
+
+4 - Com base na tabela de “produtos” monte um select para trazer a maior e a menor data  de inclusão do produto “dt_inclu_prod”:
+
+Resposta)
+	select menor_data = min(dt_inclu_prod) ,maior_data = max(dt_inclu_prod) from produtos;
+
+5 - Com base na tabela de “produtos” monte um select para trazer a quantidade total de registros existentes na tabela de “produtos”:
+
+Resposta)
+	select qtde_registros = count(cod_prod) from produtos
+
+6 - Com base na tabela de “produtos” monte um select para trazer todos os produtos que comecem com a letra “L” na tabela de “produtos”:
+
+Resposta)
+	select, cod_prod, loj_prod, desc_prod, dt_inclu_prod, preco_prod from produtos where desc_prod like 'L%';
+
+7 - Com base na tabela de “produtos” monte um select para trazer a soma de todos os preços dos produtos totalizado por loja:
+
+Resposta)
+	select loj_prod, total_produto = sum(preco_prod) from produtos group by loj_prod asc
+
+8 - Com base na tabela de “produtos” monte um select para trazer a soma de todos os preços dos produtos totalizados por loja que seja maior que R$100.000
+Resposta)
+	select loj_prod, total_produto = sum(preco_prod) from produtos where preco_prod > 100000 group by produtos asc  
+			= cod_prod, loj_prod, desc_prod, dt_inclu_prod, preco_prod
+9 - A)
+	Montar um unico select para trazer os seguintes campos: o código da loja do produto, a descrição da loja, código do produto, a descrição do produto,
+	o preço do produto, a quantidade em estoque do produto. Considere  que o código da loja para esta consulta seja igual a 1.
+	
+	Resposta)
+	select p.loj_prod, l.desc_loj, p.cod_prod, p.desc_prod, p.preco_prod, e.qtd_prod from produtos p 
+	inner join estoque e on p.cod_prod = e.cod_prod 
+	inner join lojas l on p.loj_prod = l.cod_loj 
+	where p.loj_prod = 1
+	
+	B)
+	Observe a estrutura da tabela de estoque e da tabela de produtos, monte um select para trazer todos os produtos que existem na tabela de produtos
+	que não existem na tabela de estoque.
+	
+	Resposta)
+		select a.cod_prod, a.desc_prod from produtos a
+		left join estoque b
+		on a.cod_prod = b.cod_prod
+		where e.cod_prod is null
+	C)
+	Observe a estrutura da tabela de estoque e da tabela de produtos, monte um select para trazer todos os produtos que existem na tabela de estoque
+	que não existem na tabela de produtos.
+	
+	Resposta)
+		select e.cod_prod, p.desc_prod
+		from estoque e
+		left join produtos p on e.cod_prod = p.cod_prod
+		where p.cod_prod is null 
